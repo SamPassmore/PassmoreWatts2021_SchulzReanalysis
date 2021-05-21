@@ -10,6 +10,7 @@ library(ggridges)
 library(RColorBrewer)
 
 set.seed(1990)
+dir.create("models")
 
 data = readRDS("Schulzdata_withGlottocodes.rds")
 
@@ -52,7 +53,7 @@ fit_uncontrolled = brm(
     prior(normal(0,50), "Intercept"),
     prior(student_t(3,0,20), "sigma")
   ),
-  sample_prior = TRUE, chains = 2, cores = 2, 
+  sample_prior = TRUE, chains = 2, cores = 2, criterion = "loo",
   iter = 4000, warmup = 1000, file = "models/uncontrolled_model.rds"
 )
 
@@ -71,7 +72,7 @@ fit_controlled <- brm(
     prior(student_t(3,0,20), "sd"),
     prior(student_t(3,0,20), "sigma")
   ),
-  sample_prior = TRUE, chains = 2, cores = 2, 
+  sample_prior = TRUE, chains = 2, cores = 2, criterion = "loo",
   iter = 4000, warmup = 1000, file = "models/controlled_model.rds"
 )
 
@@ -93,7 +94,7 @@ fit_controlledunique <- brm(
     prior(student_t(3,0,20), "sigma"),
     prior(student_t(3,0,10), "nu")
   ),
-  sample_prior = TRUE, chains = 2, cores = 2, 
+  sample_prior = TRUE, chains = 2, cores = 2, criterion = "loo",
   iter = 10000, warmup = 6000, file = "models/controlled_modelunique.rds",
   control = list(adapt_delta = 0.99, max_treedepth = 15)
 )
