@@ -1,6 +1,9 @@
 # ignore model files
 models/*.rds
 
+# ignore plots
+*.pdf
+
 # History files
 .Rhistory
 .Rapp.history
